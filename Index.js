@@ -1,14 +1,16 @@
 // index.js
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("JavaScript file linked successfully!");
-    alert("Hello from JavaScript!");
-});
+
 
 let listElement = document.getElementById("todoListId");
 
 
 let todoCount = 0;
-// let allTodoList = [];
+let allTodoList = getTodosFromLocalStorage();
+
+
+function getTodosFromLocalStorage() {
+    console.log("get from local");
+}
 
 
 
