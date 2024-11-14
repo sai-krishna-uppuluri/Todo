@@ -2,6 +2,7 @@
 
 
 let listElement = document.getElementById("todoListId");
+let saveTodoBtnElement = document.getElementById("saveTodoBtn");
 
 
 let todoCount = 0;
@@ -9,16 +10,56 @@ let allTodoList = getTodosFromLocalStorage();
 
 
 function getTodosFromLocalStorage() {
-    console.log("get from local");
+
+    let getTodosFromLocal = localStorage.getItem("everyTodoList");
+
+    return getTodosFromLocal ? JSON.parse(getTodosFromLocal) : [];
+}
+
+
+saveTodoBtnElement.onclick = function() {
+
+    localStorage.setItem("everyTodoList", JSON.stringify(allTodoList));
+    //console.log(storeTodoInLocal);
 }
 
 
 
 function createDisplayForTodo(toDo) {
-    
     let list = document.createElement("li");
-    list.textContent = toDo.todoUserInput;
+
+    list.classList.add("d-flex", "flex-row", "list-container");
     listElement.appendChild(list)
+
+    let inputElement = document.createElement("input");
+    inputElement.type = "checkbox";
+    inputElement.id = "checkboxId";
+    list.appendChild(inputElement);
+
+    let labelContainer = document.createElement("div");
+    labelContainer.classList.add("d-flex", "flex-row","label-container");
+
+    inputElement.setAttribute("for" , "checkboxId");
+
+    labelContainer.textContent = toDo.todoUserInput;
+
+    let deleteIconContainer = document.createElement("div");
+    deleteIconContainer.classList.add("delete-icon-container");
+    labelContainer.appendChild(deleteIconContainer);
+
+    let deleteIcon = document.createElement("i");
+    deleteIcon.classList.add("far", "fa-trash-alt", "delete-icon");
+
+    deleteIconContainer.appendChild(deleteIcon);
+
+
+
+    list.appendChild(labelContainer);
+
+    
+   // allTodoList.push(toDo);
+
+    
 }
 
 
@@ -38,11 +79,12 @@ function createAndAppendTodo(userInput) {
         todoUniqueId : todoCount
     }
 
-   // allTodoList.push(todoList);
+   
 
     // console.log(allTodoList)
     
     createDisplayForTodo(todoList);
+    
 }
 
 
@@ -62,4 +104,8 @@ function createToDo() {
 
     todoText.value = '';
     
+}
+
+for (let toDo of allTodoList) {
+    createDisplayForTodo(toDo);
 }
