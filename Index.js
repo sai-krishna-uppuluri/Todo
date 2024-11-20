@@ -5,24 +5,38 @@ let listElement = document.getElementById("todoListId");
 let saveTodoBtnElement = document.getElementById("saveTodoBtn");
 
 
-let todoCount = 0;
-let allTodoList = getTodosFromLocalStorage();
 
+
+
+
+
+let todoList = getTodosFromLocalStorage();
+let todoCount = todoList.length;
 
 function getTodosFromLocalStorage() {
 
-    let getTodosFromLocal = localStorage.getItem("everyTodoList");
+    let getTodosFromLocal = localStorage.getItem("todoList");
 
     return getTodosFromLocal ? JSON.parse(getTodosFromLocal) : [];
+
+    /* if (getTodosFromLocal === null) {
+        return []
+    }
+    else {
+        let parsedItemsFromLocal = JSON.parse(getTodosFromLocal);
+
+        return parsedItemsFromLocal; 
+    } */
+
+    
 }
 
 
 saveTodoBtnElement.onclick = function() {
 
-    localStorage.setItem("everyTodoList", JSON.stringify(allTodoList));
-    //console.log(storeTodoInLocal);
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+    
 }
-
 
 
 function createDisplayForTodo(toDo) {
@@ -43,14 +57,14 @@ function createDisplayForTodo(toDo) {
 
     labelContainer.textContent = toDo.todoUserInput;
 
-    let deleteIconContainer = document.createElement("div");
+   /* let deleteIconContainer = document.createElement("div");
     deleteIconContainer.classList.add("delete-icon-container");
     labelContainer.appendChild(deleteIconContainer);
 
-    let deleteIcon = document.createElement("i");
+     let deleteIcon = document.createElement("i");
     deleteIcon.classList.add("far", "fa-trash-alt", "delete-icon");
 
-    deleteIconContainer.appendChild(deleteIcon);
+    deleteIconContainer.appendChild(deleteIcon); */
 
 
 
@@ -63,6 +77,8 @@ function createDisplayForTodo(toDo) {
 }
 
 
+
+
 /* function displayTodoList(allTodoList){
 
     //console.log(allTodoList);
@@ -71,21 +87,12 @@ function createDisplayForTodo(toDo) {
     }
 }  */
 
-function createAndAppendTodo(userInput) {
-    todoCount = todoCount + 1;
-
-    let todoList = {
-        "todoUserInput" : userInput,
-        todoUniqueId : todoCount
-    }
-
-   
-
-    // console.log(allTodoList)
+function createAppendNewTodo(newTodo) {
     
-    createDisplayForTodo(todoList);
     
-}
+    return createDisplayForTodo(newTodo);
+    
+}  
 
 
 function createToDo() {
@@ -99,13 +106,29 @@ function createToDo() {
         alert("Enter Text")
     }
     else {
-        createAndAppendTodo(userInput);
-    }
+
+        todoCount = todoCount + 1;
+
+        let newTodo = {
+            todoUserInput : userInput,
+            todoUniqueId : todoCount
+        };
+
+       
+        
+
+
+        todoList.push(newTodo);
+            
+        createAppendNewTodo(newTodo);
+        }
 
     todoText.value = '';
     
 }
 
-for (let toDo of allTodoList) {
+
+
+for (let toDo of todoList){
     createDisplayForTodo(toDo);
 }
