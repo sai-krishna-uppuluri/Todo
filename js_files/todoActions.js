@@ -15,15 +15,18 @@ export function createToDo(todoList, todoCount, listElement) {
     }
     else {
 
-        todoCount = todoCount + 1;
+        todoCount += 1;
 
         let newTodo = {
             todoUserInput : userInput,
             todoUniqueId : todoCount
         };
 
+        console.log(newTodo);
+
         todoList.push(newTodo);
-            
+        
+        // console.log(todoList);
         createDisplayForTodo(newTodo, listElement);
         }
 
@@ -31,6 +34,12 @@ export function createToDo(todoList, todoCount, listElement) {
 
     return todoCount
     
+}
+
+export function todoStatusChange(todoId, checkboxId) {
+    
+    console.log("after" + todoId + checkboxId);
+
 }
 
 
